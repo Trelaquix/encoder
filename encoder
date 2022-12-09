@@ -1,0 +1,105 @@
+package encoder;  
+import java.util.Scanner;   
+   
+public class Encoder   
+{   
+    // ALPHABET string denotes alphabet from a-z   
+    public static final String reference = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()*+,-./";   
+      
+    // create encryptData() method for encrypting user input string with given shift key   
+    public static String encryptData(String inputStr)   
+    {   
+    	
+    	  // get offset character
+    	  private String offsetChar = inputStr.charAt(0);
+        
+        // check against reference to find index to determine amount to shift
+        private Int offset = inputStr.indexof(offsetChar);
+      
+        // offset reference string to match offset
+        reference = reference.charAt(reference.length() - offset) + reference.substring(0, reference.length() - offset);
+        
+        // get index of space to add it back later to the encrypted string
+        private Int spaceIndex = inputStr.indexof(" ");
+        
+        // remove first char from input string
+        private inputStr = inputStr.substring(1);
+        
+        // change input string to upper case
+        inputStr = inputStr.toUpperCase(0);
+        
+        // encryptStr to store encrypted data   
+        private String encryptedString = "";   
+        
+        
+        // use for loop for traversing each character of the input string   
+        for (int i = 0; i < inputStr.length(); i++)   
+        {   
+            // get position of each character of inputStr in ALPHABET   
+            int position = reference.indexOf(inputStr.charAt(i));   
+              
+            // get encrypted char for each char of inputStr   
+            int encryptPos = (offsetChar + position) % 44;   
+            char encryptChar = reference.charAt(encryptPos);   
+              
+            // add encrypted char to encrypted string   
+            strToEncrypt += encryptChar;   
+        }   
+          
+        // return encrypted string   
+        return strToEncrypt;   
+    }   
+      
+    // create decryptData() method for decrypting user input string with given shift key   
+    public static String decryptData(String inputStr, int shiftKey)   
+    {   
+        // convert inputStr into lower case   
+        inputStr = inputStr.toLowerCase();   
+          
+        // decryptStr to store decrypted data   
+        String decryptStr = "";   
+          
+        // use for loop for traversing each character of the input string   
+        for (int i = 0; i < inputStr.length(); i++)   
+        {   
+              
+            // get position of each character of inputStr in ALPHABET   
+            int pos = reference.indexOf(inputStr.charAt(i));   
+              
+            // get decrypted char for each char of inputStr   
+            int decryptPos = (pos - shiftKey) % 26;   
+              
+            // if decryptPos is negative   
+            if (decryptPos < 0){   
+                decryptPos = reference.length() + decryptPos;   
+            }   
+            char decryptChar = reference.charAt(decryptPos);   
+              
+            // add decrypted char to decrypted string   
+            decryptStr += decryptChar;   
+        }   
+        // return decrypted string   
+        return decryptStr;   
+    }   
+      
+    // main() method start   
+    public static void main(String[] args)   
+    {   
+        // create an instance of Scanner class   
+        Scanner sc = new Scanner(System.in);   
+        
+        // take input from the user   
+        System.out.println("Please enter E to Encode or D to Decode: ");   
+        String methodToCall = sc.nextLine();   
+        
+        // take input from the user   
+        System.out.println("Enter a string: ");   
+        String inputStr = sc.nextLine();  
+          
+        System.out.println("Encrypted Data ===> "+encryptData(inputStr));   
+        System.out.println("Decrypted Data ===> "+decryptData(encryptedString));   
+          
+        // close Scanner class object   
+        sc.close();   
+    }   
+}   
